@@ -10,6 +10,74 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+let teamArray = [];
+
+async function init() {
+    const managerAnswers = await inquirer.prompt(prompts.manager);
+    
+    const manager = new Manager(
+        managerAnswers.managerName,
+        managerAnswers.managerID,
+        managerAnswers.managerEmail,
+        managerAnswers.managerOfficeNumber
+    )
+
+    teamArray.push(manager);
+    addMember();
+}
+
+async function addMember() {
+    const choice = await inquirer.prompt(prompts.employeeChoice);
+
+    switch(choice.employeeChoice) {
+        case 'Add an Engineer':
+            await addEngineer();  
+            break;
+        case 'Add an Intern':
+            await addIntern();
+            break;      
+        default:
+            buildTeam();
+    }
+}
+//addEngineer -> addMember
+async function addEngineer() {
+    const engineerAnswers = await inquirer.prompt(prompts.engineer);
+
+    const engineer = new Engineer(
+        engineerAnswers.engineerName,
+        engineerAnswers.engineerID,
+        engineerAnswers.engineerEmail,
+        engineerAnswers.engineerGitHub
+    )
+
+    teamArray.push(engineer);
+    addMember();
+}
+//addIntern -> addMember
+async function addIntern() {
+    const internAnswers = await inquirer.prompt(prompts.intern);
+
+    const intern = new Intern(
+        internAnswers.internName,
+        internAnswers.internID,
+        internAnswers.internEmail,
+        internAnswers.internSchool
+    )
+
+    teamArray.push(intern);
+    addMember();
+}
+
+//buildTeam
+async function buildTeam() {
+    const result = await render(teamArray);
+    fs.writeFile(outputPath, result, function(err) {
+        if (err)
+            throw err;
+    });
+}
+init();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
