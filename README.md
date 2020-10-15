@@ -1,5 +1,3 @@
-# unit-10-oop-homework
-
 # Project Name
 
 Homework 10 - Employee Summary
