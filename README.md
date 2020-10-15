@@ -33,7 +33,7 @@ A webpage to generate and display a team's basic information.
 
 # Video Demo
 
-![Video Demo](assets/Homework10Vid.giv)
+![Video Demo](assets/Homework10Vid.gif)
 
 # Features
 
