@@ -74,10 +74,10 @@ module.exports = {
 		},
 	],
 	// question for the adding more team members or end
-	staffChoice: [
+	employeeChoice: [
 		{
 			type: 'list',
-			name: 'staffChoice',
+			name: 'employeeChoice',
 			message: 'What action would you like to take?',
 			choices: ['Add an Engineer', 'Add an Intern', 'Done'],
 		},

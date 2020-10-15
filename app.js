@@ -4,6 +4,7 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const prompts = require("./prompt");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
@@ -17,18 +18,20 @@ async function init() {
     
     const manager = new Manager(
         managerAnswers.managerName,
-        managerAnswers.managerID,
+        managerAnswers.managerId,
         managerAnswers.managerEmail,
-        managerAnswers.managerOfficeNumber
-    )
+        managerAnswers.managerOffice
+    );
 
     teamArray.push(manager);
+    console.log("manager complete");
     addMember();
 }
 
 async function addMember() {
+    console.log("step 1");
     const choice = await inquirer.prompt(prompts.employeeChoice);
-
+    console.log(choice);
     switch(choice.employeeChoice) {
         case 'Add an Engineer':
             await addEngineer();  
@@ -42,28 +45,30 @@ async function addMember() {
 }
 //addEngineer -> addMember
 async function addEngineer() {
+    console.log("step 3");
     const engineerAnswers = await inquirer.prompt(prompts.engineer);
 
     const engineer = new Engineer(
         engineerAnswers.engineerName,
-        engineerAnswers.engineerID,
+        engineerAnswers.engineerId,
         engineerAnswers.engineerEmail,
-        engineerAnswers.engineerGitHub
-    )
+        engineerAnswers.engineerGithub
+    );
 
     teamArray.push(engineer);
     addMember();
 }
 //addIntern -> addMember
 async function addIntern() {
+    console.log("step 3");
     const internAnswers = await inquirer.prompt(prompts.intern);
 
     const intern = new Intern(
         internAnswers.internName,
-        internAnswers.internID,
+        internAnswers.internId,
         internAnswers.internEmail,
         internAnswers.internSchool
-    )
+    );
 
     teamArray.push(intern);
     addMember();
@@ -77,6 +82,7 @@ async function buildTeam() {
             throw err;
     });
 }
+
 init();
 
 // Write code to use inquirer to gather information about the development team members,
